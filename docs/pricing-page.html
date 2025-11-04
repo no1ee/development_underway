@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoShield Pricing - Enterprise Cryptographic Protection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .pricing-toggle {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .toggle-buttons {
+            display: inline-flex;
+            background: white;
+            border-radius: 50px;
+            padding: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .toggle-btn {
+            padding: 12px 30px;
+            border: none;
+            background: transparent;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .save-badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #667eea;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .plan-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .plan-price span {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .plan-description {
+            color: #666;
+            margin-bottom: 25px;
+            min-height: 48px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .plan-features li.disabled {
+            opacity: 0.4;
+        }
+
+        .plan-features li.disabled::before {
+            content: '✗';
+            color: #ef4444;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .cta-button.secondary:hover {
+            background: #f8f9fa;
+        }
+
+        .enterprise-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 60px 30px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .enterprise-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .enterprise-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .enterprise-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .enterprise-feature {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .enterprise-feature h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .faq-section {
+            margin: 80px 0;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 25px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .faq-answer {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .trust-badges {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            background: white;
+            border-radius: 16px;
+        }
+
+        .trust-badges h3 {
+            margin-bottom: 30px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 2rem;
+            opacity: 0.7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .enterprise-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🔒 CryptoShield Pricing</h1>
+            <p>Enterprise-grade protection for your software</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="pricing-toggle">
+            <div class="toggle-buttons">
+                <button class="toggle-btn active" onclick="togglePricing('monthly')">Monthly</button>
+                <button class="toggle-btn" onclick="togglePricing('annual')">
+                    Annual <span class="save-badge">Save 17%</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Community Plan -->
+            <div class="pricing-card">
+                <div class="plan-icon">🆓</div>
+                <div class="plan-name">Community</div>
+                <div class="plan-price">
+                    $0<span>/month</span>
+                </div>
+                <div class="plan-description">
+                    Perfect for open source projects and evaluation
+                </div>
+                <ul class="plan-features">
+                    <li>Basic protection level</li>
+                    <li>Code integrity verification</li>
+                    <li>SHA-256 checksums</li>
+                    <li>Up to 10K monthly users</li>
+                    <li>Community support</li>
+                    <li class="disabled">Anti-debugging</li>
+                    <li class="disabled">Anti-tampering</li>
+                    <li class="disabled">Memory encryption</li>
+                </ul>
+                <button class="cta-button secondary">Get Started Free</button>
+            </div>
+
+            <!-- Professional Plan -->
+            <div class="pricing-card">
+                <div class="plan-icon">💼</div>
+                <div class="plan-name">Professional</div>
+                <div class="plan-price">
+                    <span class="monthly-price">$299</span>
+                    <span class="annual-price" style="display:none;">$249</span>
+                    <span>/month</span>
+                </div>
+                <div class="plan-description">
+                    For indie developers and small teams
+                </div>
+                <ul class="plan-features">
+                    <li>Standard protection level</li>
+                    <li>Anti-tampering detection</li>
+                    <li>Runtime integrity checks</li>
+                    <li>Up to 100K monthly users</li>
+                    <li>Email support (48hr)</li>
+                    <li>5 protected applications</li>
+                    <li>Basic obfuscation</li>
+                    <li class="disabled">Memory encryption</li>
+                </ul>
+                <button class="cta-button secondary">Start Free Trial</button>
+            </div>
+
+            <!-- Business Plan (Featured) -->
+            <div class="pricing-card featured">
+                <div class="plan-icon">🚀</div>
+                <div class="plan-name">Business</div>
+                <div class="plan-price">
+                    <span class="monthly-price">$999</span>
+                    <span class="annual-price" style="display:none;">$832</span>
+                    <span>/month</span>
+                </div>
+                <div class="plan-description">
+                    For growing companies and serious protection
+                </div>
+                <ul class="plan-features">
+                    <li>Maximum protection level</li>
+                    <li>Anti-debugging protection</li>
+                    <li>Memory encryption</li>
+                    <li>Advanced obfuscation</li>
+                    <li>Up to 1M monthly users</li>
+                    <li>Priority support (24hr)</li>
+                    <li>25 protected applications</li>
+                    <li>DRM components</li>
+                    <li>White-label options</li>
+                </ul>
+                <button class="cta-button primary">Start Free Trial</button>
+            </div>
+        </div>
+
+        <!-- Enterprise Section -->
+        <div class="enterprise-section">
+            <h2>🏢 Enterprise</h2>
+            <p>Custom solutions for organizations with advanced security requirements</p>
+
+            <div class="enterprise-features">
+                <div class="enterprise-feature">
+                    <h3>🎯 Dedicated Support</h3>
+                    <p>24/7 phone & email support with 4-hour SLA and dedicated account manager</p>
+                </div>
+                <div class="enterprise-feature">
+                    <h3>🔧 Custom Development</h3>
+                    <p>Custom protection algorithms and integration with your security infrastructure</p>
+                </div>
+                <div class="enterprise-feature">
+                    <h3>📊 Unlimited Scale</h3>
+                    <p>Unlimited monthly active users and protected applications</p>
+                </div>
+                <div class="enterprise-feature">
+                    <h3>🏛️ Compliance</h3>
+                    <p>SOC 2, HIPAA, FIPS 140-2 compliance assistance and certifications</p>
+                </div>
+                <div class="enterprise-feature">
+                    <h3>📝 Source License</h3>
+                    <p>Optional source code license for maximum control and customization</p>
+                </div>
+                <div class="enterprise-feature">
+                    <h3>🎓 Training</h3>
+                    <p>Onboarding, training workshops, and quarterly security reviews</p>
+                </div>
+            </div>
+
+            <button class="cta-button primary" style="max-width: 300px; margin: 20px auto;">Contact Sales</button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="trust-badges">
+            <h3>Trusted by software companies worldwide</h3>
+            <div class="badges">
+                <span class="badge" title="SOC 2 Compliant">🔐 SOC 2</span>
+                <span class="badge" title="256-bit Encryption">🛡️ AES-256</span>
+                <span class="badge" title="ISO 27001">📋 ISO 27001</span>
+                <span class="badge" title="GDPR Compliant">🇪🇺 GDPR</span>
+                <span class="badge" title="99.9% Uptime">⚡ 99.9% SLA</span>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Is there a free trial?</div>
+                <div class="faq-answer">
+                    Yes! We offer a 14-day free trial on Professional and Business tiers with full feature access. No credit card required.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What happens when I exceed my monthly active user limit?</div>
+                <div class="faq-answer">
+                    We'll notify you when you're approaching your limit. You can purchase additional MAU blocks ($200-$800/month depending on tier) or upgrade to the next tier.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I switch plans later?</div>
+                <div class="faq-answer">
+                    Absolutely! You can upgrade or downgrade at any time. Upgrades take effect immediately, and downgrades take effect at the next billing cycle with pro-rated refunds.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you offer discounts for startups or non-profits?</div>
+                <div class="faq-answer">
+                    Yes! Startups (<$1M revenue, <2 years old) get 50% off for the first year. Non-profits receive 75% off with proper documentation.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What's your refund policy?</div>
+                <div class="faq-answer">
+                    We offer a 30-day money-back guarantee on annual plans, no questions asked. Monthly plans are pro-rated for the first month only.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How does CryptoShield compare to building in-house?</div>
+                <div class="faq-answer">
+                    Building similar protection in-house typically costs $50K-500K in development time plus ongoing maintenance. CryptoShield provides immediate deployment, expert maintenance, and continuous security updates at a fraction of the cost.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What kind of support do you provide?</div>
+                <div class="faq-answer">
+                    Community tier gets GitHub issues support. Professional receives email support (48hr SLA). Business gets priority email support (24hr SLA). Enterprise includes 24/7 phone support with 4hr SLA and a dedicated account manager.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I use CryptoShield for multiple products?</div>
+                <div class="faq-answer">
+                    Yes! Each tier includes multiple protected applications (1 for Community, 5 for Professional, 25 for Business, unlimited for Enterprise). You can purchase additional application slots if needed.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CryptoShield Protection SDK. All rights reserved.</p>
+            <p>Questions? Email <a href="mailto:sales@cryptoshield.dev">sales@cryptoshield.dev</a></p>
+        </div>
+    </footer>
+
+    <script>
+        function togglePricing(period) {
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const monthlyPrices = document.querySelectorAll('.monthly-price');
+            const annualPrices = document.querySelectorAll('.annual-price');
+
+            if (period === 'monthly') {
+                monthlyPrices.forEach(el => el.style.display = 'inline');
+                annualPrices.forEach(el => el.style.display = 'none');
+            } else {
+                monthlyPrices.forEach(el => el.style.display = 'none');
+                annualPrices.forEach(el => el.style.display = 'inline');
+            }
+        }
+    </script>
+</body>
+</html>
